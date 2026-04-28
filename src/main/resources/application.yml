@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: GPSolutionsTest
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: ${H2_USERNAME}
+    password: ${H2_PASSWORD}
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+      show-sql: true
+      properties:
+        hibernate:
+          format_sql: true
+          use_sql_comments: true
+
+  liquibase:
+    change-log: liquibase/changelog-master.xml
+
+  h2:
+    console:
+      enabled: true
+
+server:
+  port: 8092
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+      type:
+        descriptor:
+          sql: TRACE

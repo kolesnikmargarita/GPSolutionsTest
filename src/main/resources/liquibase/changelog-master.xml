@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="2026-04-27_23-10-00" author="Margarita Kolesnik">
+
+        <createSequence sequenceName="contacts_id_seq" startValue="1" incrementBy="1"/>
+        <createTable tableName="contacts">
+            <column name="id" type="BIGINT" defaultValueComputed="nextval('contacts_id_seq')">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_contacts"/>
+            </column>
+            <column name="phone" type="VARCHAR">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="email" type="VARCHAR">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="arrival_times_id_seq" startValue="1" incrementBy="1"/>
+        <createTable tableName="arrival_times">
+            <column name="id" type="BIGINT" defaultValueComputed="nextval('arrival_times_id_seq')">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_arrival_times"/>
+            </column>
+            <column name="check_in" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="check_out" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="amenities_id_seq" startValue="1" incrementBy="1"/>
+        <createTable tableName="amenities">
+            <column name="id" type="BIGINT" defaultValueComputed="nextval('amenities_id_seq')">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_amenities"/>
+            </column>
+            <column name="name" type="VARCHAR">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="address_id_seq" startValue="1" incrementBy="1"/>
+        <createTable tableName="address">
+            <column name="id" type="BIGINT" defaultValueComputed="nextval('address_id_seq')">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_address"/>
+            </column>
+            <column name="house_number" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="street" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="VARCHAR">
+            </column>
+            <column name="post_code" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="hotel_id_seq" startValue="1" incrementBy="1"/>
+        <createTable tableName="hotels">
+            <column name="id" type="BIGINT" defaultValueComputed="nextval('hotel_id_seq')">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_hotel"/>
+            </column>
+            <column name="name" type="VARCHAR">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="description" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="brand" type="VARCHAR">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="arrival_time_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="address_id" baseTableName="hotels" constraintName="fk_hotels_to_address" referencedColumnNames="id" referencedTableName="address" />
+        <addForeignKeyConstraint baseColumnNames="contact_id" baseTableName="hotels" constraintName="fk_hotels_to_contacts" referencedColumnNames="id" referencedTableName="contacts" />
+        <addForeignKeyConstraint baseColumnNames="arrival_time_id" baseTableName="hotels" constraintName="fk_hotels_to_arrival_times" referencedColumnNames="id" referencedTableName="arrival_times" />
+
+        <createTable tableName="hotels_amenities">
+            <column name="hotel_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amenity_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="hotel_id" baseTableName="hotels_amenities" constraintName="fk_hotels_amenities_to_hotels" referencedColumnNames="id" referencedTableName="hotels" />
+        <addForeignKeyConstraint baseColumnNames="amenity_id" baseTableName="hotels_amenities" constraintName="fk_hotels_amenities_to_amenities" referencedColumnNames="id" referencedTableName="amenities" />
+
+    </changeSet>
+
+</databaseChangeLog>
