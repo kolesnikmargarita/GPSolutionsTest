@@ -15,7 +15,7 @@ public class ArrivalTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "check_in")
+    @Column(name = "check_in", nullable = false)
     private LocalTime checkIn;
 
     @Column(name = "check_out")

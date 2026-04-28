@@ -47,9 +47,9 @@ public class HotelSpecificationSearch {
                 ));
             }
 
-            if (filter.getAmenities() != null && !filter.getAmenities().isEmpty()) {
+            if (filter.getAmenity() != null && !filter.getAmenity().isEmpty()) {
                 Join<Hotel, Amenity> join = root.join("amenities", JoinType.INNER);
-                predicates.add(join.get("name").in(filter.getAmenities()));
+                predicates.add(join.get("name").in(filter.getAmenity()));
                 query.distinct(true);
             }
 
